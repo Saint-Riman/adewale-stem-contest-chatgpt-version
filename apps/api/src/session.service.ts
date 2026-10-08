@@ -43,7 +43,7 @@ export class SessionService {
       participants.set(p.id, {
         id: p.id,
         displayName: p.display_name,
-        contestantId: p.contestant_id ?? undefined,
+        ...(p.contestant_id ? { contestantId: p.contestant_id } : {}),
         score: p.score,
         correct: p.correct,
         incorrect: p.incorrect,
