@@ -1,0 +1,1 @@
+export interface ScoreInput{correct:boolean;responseTimeMs:number;totalTimeMs:number} export function scoreAnswer(x:ScoreInput){if(!x.correct)return 0;const total=Math.max(1,x.totalTimeMs);const remaining=Math.max(0,total-x.responseTimeMs);return Math.round(1000*(1+remaining/total));}
