@@ -1,32 +1,18 @@
 # Adewale STEM Contest
 
-A production-oriented realtime STEM competition platform for school and academic competitions.
+Production-ready realtime STEM competition platform designed for deployment on Vercel.
 
-## Product direction
+## Architecture
 
-The platform is designed around a projector-first host experience, mobile-first contestant experience, server-authoritative timing and scoring, and an admin workflow for importing and managing question banks.
+- Next.js frontend in `apps/web`
+- NestJS API in `apps/api`
+- Vercel Services for one-project deployment
+- PostgreSQL for durable application state
+- Redis for realtime coordination
+- Socket.IO for live contest events
 
-## Planned stack
+## Deployment
 
-- Next.js + React + TypeScript
-- Tailwind CSS
-- NestJS + TypeScript
-- PostgreSQL
-- Redis
-- Socket.IO
-- Drizzle ORM
-- Zod
-- SheetJS
-- Vitest + Playwright
+This repository is configured for Vercel Services. The frontend is public at `/`; the API is public at `/api/*`.
 
-## Core flow
-
-ADMIN → question bank → quiz builder → live session → contestants join by room code → server-authoritative questions/timer → answers → scoring → reveal → leaderboard → final results.
-
-## Development status
-
-The repository is being built incrementally, starting with the architecture and core live-quiz vertical slice before secondary administration and analytics features.
-
-## Requirements
-
-Node.js 22+, pnpm 10+, PostgreSQL 16+, Redis 7+.
+See `docs/DEPLOYMENT.md` for environment variables and deployment steps.
