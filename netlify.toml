@@ -1,0 +1,7 @@
+[build]
+  base = "."
+  command = "pnpm --filter @adewale/web build"
+  publish = "apps/web/.next"
+
+[build.environment]
+  PNPM_FLAGS = "--shamefully-hoist"
