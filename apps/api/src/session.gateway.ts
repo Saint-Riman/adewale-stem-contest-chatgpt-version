@@ -1,21 +1,31 @@
 import {
+  OnGatewayInit,
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer
 } from "@nestjs/websockets";
+import { createAdapter } from "@socket.io/redis-adapter";
+import { createClient } from "redis";
 import { Server } from "socket.io";
 import { SessionService } from "./session.service";
 
 @WebSocketGateway({
-  namespace: "/",
   path: "/api/socket.io",
   cors: { origin: true, credentials: true }
 })
-export class SessionGateway {
+export class SessionGateway implements OnGatewayInit {
   @WebSocketServer()
   server!: Server;
 
   constructor(private readonly service: SessionService) {}
+
+  async afterInit(server: Server) {
+    if (!process.env.REDIS_URL) return;
+    const pub = createClient({ url: process.env.REDIS_URL });
+    const sub = pub.duplicate();
+    await Promise.all([pub.connect(), sub.connect()]);
+    server.adapter(createAdapter(pub, sub));
+  }
 
   @SubscribeMessage("session:join")
   async join(
@@ -62,14 +72,14 @@ export class SessionGateway {
       action: "start" | "next" | "reveal" | "leaderboard" | "end";
     }
   ) {
-    const actions = {
-      start: () => this.service.start(payload.roomCode),
-      next: () => this.service.next(payload.roomCode),
-      reveal: () => this.service.reveal(payload.roomCode),
-      leaderboard: () => this.service.leaderboard(payload.roomCode),
-      end: () => this.service.end(payload.roomCode)
-    };
-    const result = await actions[payload.action]();
+    const action = payload.action;
+    let result;
+    if (action === "start") result = await this.service.start(payload.roomCode);
+    else if (action === "next") result = await this.service.next(payload.roomCode);
+    else if (action === "reveal") result = await this.service.reveal(payload.roomCode);
+    else if (action === "leaderboard") result = await this.service.leaderboard(payload.roomCode);
+    else result = await this.service.end(payload.roomCode);
+
     const session = await this.service.getSession(payload.roomCode);
     this.server.to(session.id).emit("session:state", result);
     return result;
