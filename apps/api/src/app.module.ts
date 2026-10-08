@@ -1,0 +1,1 @@
+import {Module} from "@nestjs/common"; import {HealthController} from "./health.controller"; import {SessionController} from "./session.controller"; import {SessionGateway} from "./session.gateway"; import {SessionService} from "./session.service"; @Module({controllers:[HealthController,SessionController],providers:[SessionService,SessionGateway]}) export class AppModule {}
