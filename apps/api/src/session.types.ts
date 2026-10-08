@@ -1,0 +1,1 @@
+import {AnswerChoice,SessionState,Question,Quiz,Participant} from "./domain"; export type {AnswerChoice,SessionState,Question,Quiz,Participant}; export interface LiveSession{ id:string;roomCode:string;quiz:Quiz;state:SessionState;currentIndex:number;questionStartedAt?:number;questionDeadline?:number;participants:Map<string,Participant>;answers:Map<string,AnswerChoice>;}
