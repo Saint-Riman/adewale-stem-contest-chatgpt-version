@@ -1,0 +1,1 @@
+{"name":"adewale-stem-contest","private":true,"packageManager":"pnpm@10.12.4","scripts":{"dev":"pnpm --parallel --filter @adewale/api --filter @adewale/web dev","build":"pnpm -r build","test":"pnpm -r test","typecheck":"pnpm -r typecheck"}}
