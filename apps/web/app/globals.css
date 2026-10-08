@@ -1,0 +1,1 @@
+@import "tailwindcss"; :root{--ink:#101828;--paper:#f7f7f4;--navy:#0b1730;--accent:#d9a441}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Arial,Helvetica,sans-serif}.grid-bg{background-image:linear-gradient(rgba(16,24,40,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(16,24,40,.05) 1px,transparent 1px);background-size:32px 32px}
