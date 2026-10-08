@@ -1,0 +1,1 @@
+node_modules/\n.next/\ndist/\ncoverage/\n.env\n.env.*\n!.env.example\n*.log\n
